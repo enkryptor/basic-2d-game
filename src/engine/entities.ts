@@ -22,7 +22,6 @@ export class MovingEntity extends Entity {
     private elapsed: number;
 
     public velocity: Vector2D = { x: 0, y: 0 };
-    public angularVelocity: number = 0;
 
     constructor(params: EntityParams) {
         super(params);

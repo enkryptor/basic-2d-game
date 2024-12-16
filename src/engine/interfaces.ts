@@ -3,12 +3,13 @@ export interface Vector2D {
     y: number;
 }
 
-export interface Keys {
+export interface Controller {
     direction: Vector2D;
 }
 
 export interface GameContext {
-    keys: Keys;
+    control: Controller;
+    getNearestEntity<T extends EntityInterface>(EntityClass: new (params: EntityParams & { game: GameContext }) => T): T;
 }
 
 export interface EntityInterface {
@@ -19,7 +20,8 @@ export interface EntityInterface {
 export interface GameInit {
     screenWidth: number;
     screenHeight: number;
-    addEntity(EntityClass: new (params:EntityParams) => EntityInterface, params: Omit<EntityParams, "game">): void;
+    fillStyle: string;
+    addEntity(EntityClass: new (params: EntityParams) => EntityInterface, params: Omit<EntityParams, "game">): void;
 }
 
 export interface EntityParams {

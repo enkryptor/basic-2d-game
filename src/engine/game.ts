@@ -1,11 +1,13 @@
-import { EntityInterface, EntityParams, GameContext, GameInit, Keys } from "./interfaces";
+import { EntityInterface, EntityParams, GameContext, GameInit, Controller } from "./interfaces";
 import { Keyboard } from "./keyboard";
 
 
 export class Game implements GameContext, GameInit {
     private children: EntityInterface[] = [];
 
-    public keys: Keys = new Keyboard();
+    public control: Controller = new Keyboard();
+
+    public fillStyle: string = "rgba(0, 0, 0, 1)";
 
     public get screenWidth(): number {
         return this.ctx.canvas.width;
@@ -30,8 +32,15 @@ export class Game implements GameContext, GameInit {
         this.drawCycle(this.ctx);
     }
 
+    public getNearestEntity<T extends EntityInterface>(EntityClass: new (params: EntityParams) => T): T {
+        console.log('searching for', EntityClass)
+        const entities = this.children.filter(e => e instanceof EntityClass);
+        // TODO take nearest
+        return entities[0] as T;
+    }
+
     private drawCycle(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+        ctx.fillStyle = this.fillStyle;
         ctx.fillRect(0, 0, this.width, this.height);
 
         this.children.forEach(node => node.draw(ctx));
