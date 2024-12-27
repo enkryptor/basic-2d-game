@@ -11,15 +11,20 @@ export default class Text extends Entity {
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
+        if (!this.position) {
+            return;
+        }
         ctx.font = "normal 48px sans-serif";
         ctx.textAlign = "center";
         ctx.fillStyle = "white";
-        ctx.fillText(this.text, this.x, this.y);
+        ctx.fillText(this.text, this.position.x, this.position.y);
     }
 
-    public update(delta: number, game: Game): void {
-        this.x = game.screenWidth / 2;
-        this.y = game.screenHeight / 2;
+    public update(game: Game): void {
+        this.position = {
+            x: game.screenWidth / 2,
+            y: game.screenHeight / 2,
+        }
         if (game.control.fire) {
             game.setScreen(mainScreen);
         }

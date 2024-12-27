@@ -18,3 +18,8 @@ export function normalize(vector: Vector2D): Vector2D {
     const m = magnitude(vector);
     return m ? divide(vector, m) : { x: 0, y: 0};
 }
+
+export function getDirection(from: Vector2D, to: Vector2D): Vector2D {
+    const targetDirection = Math.atan2(to.y - from.y,  to.x - from.x);
+    return { x: Math.cos(targetDirection), y: Math.sin(targetDirection) };
+}

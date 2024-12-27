@@ -1,9 +1,12 @@
-import { EntityInterface, EntityParams, GameContext, GameInit, Controller } from "./interfaces";
+import { Entity } from "./entities";
+import { GameContext, Controller } from "./interfaces";
 import { Keyboard } from "./keyboard";
 
 
-export class Game implements GameContext, GameInit {
-    private children: EntityInterface[] = [];
+export class Game implements GameContext {
+    private children: Entity[] = [];
+
+    public elapsed: number = 0;
 
     public control: Controller = new Keyboard();
 
@@ -22,14 +25,15 @@ export class Game implements GameContext, GameInit {
         this.fitToParent();
     }
 
-    public add(entities: EntityInterface[]): void {
+    public add(something: Entity | Entity[]): void {
+        const entities = Array.isArray(something) ? something : [something];
         entities.forEach((entity) => {
             entity.init(this);
             this.children.push(entity);
         });
     }
 
-    public setScreen(entities: EntityInterface[]) {
+    public setScreen(entities: Entity[]) {
         this.children = [];
         this.add(entities);
     }
@@ -38,7 +42,7 @@ export class Game implements GameContext, GameInit {
         this.drawCycle(this.ctx);
     }
 
-    public getNearestEntity<T extends EntityInterface>(EntityClass: new (params: EntityParams) => T): T {
+    public getNearestEntity<T extends Entity>(EntityClass: new () => T): T {
         const entities = this.children.filter(e => e instanceof EntityClass);
         // TODO take nearest
         return entities[0] as T;
@@ -56,8 +60,9 @@ export class Game implements GameContext, GameInit {
         })
     }
 
-    private update(delta: number) {
-        this.children.forEach(node => node.update(delta, this));
+    private update(elapsed: number) {
+        this.elapsed = elapsed;
+        this.children.forEach(node => node.update(this));
     }
 
     private get width(): number {

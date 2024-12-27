@@ -1,4 +1,4 @@
-import { Game } from "./game";
+import { Entity } from "./entities";
 
 export interface Vector2D {
     x: number;
@@ -11,22 +11,10 @@ export interface Controller {
 }
 
 export interface GameContext {
+    elapsed: number;
     control: Controller;
-    getNearestEntity<T extends EntityInterface>(EntityClass: new (params: EntityParams & { game: GameContext }) => T): T;
-}
-
-export interface EntityInterface {
-    draw(ctx: CanvasRenderingContext2D): void;
-    update(delta: number, game: GameContext): void;
-    init(game: GameContext): void;
-}
-
-export interface GameInit {
+    getNearestEntity<T extends Entity>(EntityClass: new () => T): T;
+    add<T extends Entity>(something: T | T[]): void;
     screenWidth: number;
     screenHeight: number;
-    fillStyle: string;
-}
-
-export interface EntityParams {
-    position?: Vector2D;
 }

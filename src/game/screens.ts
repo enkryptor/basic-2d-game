@@ -1,6 +1,6 @@
 import Player from "./player";
-import Enemy from "./enemy";
 import Text from "./start-menu";
+import EnemySpawner from "./enemy-spawner";
 
 export const startScreen = [
     new Text("Press space to start"),
@@ -8,5 +8,5 @@ export const startScreen = [
 
 export const mainScreen = [
     new Player(),
-    new Enemy(),
+    new EnemySpawner(),
 ];
