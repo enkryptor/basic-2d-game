@@ -5,9 +5,14 @@ export class Keyboard {
     public leftPressed = 0;
     public upPressed = 0;
     public downPressed = 0;
+    public spacePressed = 0;
 
     public get direction(): Vector2D {
         return { x: this.rightPressed - this.leftPressed, y: this.downPressed - this.upPressed };
+    }
+
+    public get fire(): boolean {
+        return Boolean(this.spacePressed);
     }
 
     constructor() {
@@ -26,6 +31,9 @@ export class Keyboard {
         } else if (event.code === "ArrowUp") {
             this.upPressed = 1;
         }
+        if (event.code === "Space") {
+            this.spacePressed = 1;
+        }
     }
 
     private keyUpHandler(event: KeyboardEvent) {
@@ -38,6 +46,9 @@ export class Keyboard {
             this.downPressed = 0;
         } else if (event.code === "ArrowUp") {
             this.upPressed = 0;
+        }
+        if (event.code === "Space") {
+            this.spacePressed = 0;
         }
     }
 }

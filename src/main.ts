@@ -9,4 +9,5 @@ if (!ctx) throw new Error("Can't initialize 2d contex.");
 
 const game = new Game(ctx);
 
-game.run(startScreen);
+game.setScreen(startScreen);
+game.run();

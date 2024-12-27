@@ -1,20 +1,20 @@
-import { GameContext, EntityParams, EntityInterface, Vector2D } from "./interfaces";
+import { Game } from "./game";
+import { EntityParams, EntityInterface, Vector2D, GameContext } from "./interfaces";
 
 export class Entity implements EntityInterface {
     public x: number;
     public y: number;
-    public game: GameContext;
+    public game: Game | null = null;
 
     constructor(params: EntityParams) {
-        this.x = params.position.x;
-        this.y = params.position.y;
-        this.game = params.game;
+        this.x = params.position?.x ?? 0;
+        this.y = params.position?.y ?? 0;
     }
 
     public draw(ctx: CanvasRenderingContext2D): void;
     public draw(): void { }
 
-    public update(delta: number): void;
+    public update(delta: number, game: GameContext): void;
     public update(): void { }
 }
 
@@ -28,7 +28,7 @@ export class MovingEntity extends Entity {
         this.elapsed = Number(document.timeline.currentTime) || 0;
     }
 
-    public update(elapsed: number) {
+    public update(elapsed: number, game: Game) {
         const delta = elapsed - this.elapsed;
         this.elapsed = elapsed;
         const updateSpeed = (delta / 16.6); // ˜60fps

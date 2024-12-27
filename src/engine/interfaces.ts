@@ -1,3 +1,5 @@
+import { Game } from "./game";
+
 export interface Vector2D {
     x: number;
     y: number;
@@ -5,6 +7,7 @@ export interface Vector2D {
 
 export interface Controller {
     direction: Vector2D;
+    fire: Boolean;
 }
 
 export interface GameContext {
@@ -14,17 +17,16 @@ export interface GameContext {
 
 export interface EntityInterface {
     draw(ctx: CanvasRenderingContext2D): void;
-    update(delta: number): void;
+    update(delta: number, game: GameContext): void;
 }
 
 export interface GameInit {
     screenWidth: number;
     screenHeight: number;
     fillStyle: string;
-    addEntity(EntityClass: new (params: EntityParams) => EntityInterface, params: Omit<EntityParams, "game">): void;
+    add(entity: EntityInterface): void;
 }
 
 export interface EntityParams {
-    position: Vector2D;
-    game: GameContext;
+    position?: Vector2D;
 }

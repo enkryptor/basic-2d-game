@@ -22,13 +22,18 @@ export class Game implements GameContext, GameInit {
         this.fitToParent();
     }
 
-    public addEntity(EntityClass: new (params: EntityParams & { game: GameContext }) => EntityInterface, params: EntityParams): void {
-        const entity = new EntityClass({ ...params, game: this});
-        this.children.push(entity);
+    public add(...entities: EntityInterface[]): void {
+        entities.forEach((entity) => {
+            this.children.push(entity);
+        });
     }
 
-    public run(initializer: (g: Game) => void) {
-        initializer(this);
+    public setScreen(initializer: (g: Game) => void) {
+        this.children = [];
+        initializer(this);        
+    }
+
+    public run() {
         this.drawCycle(this.ctx);
     }
 
@@ -51,7 +56,7 @@ export class Game implements GameContext, GameInit {
     }
 
     private update(delta: number) {
-        this.children.forEach(node => node.update(delta));
+        this.children.forEach(node => node.update(delta, this));
     }
 
     private get width(): number {
