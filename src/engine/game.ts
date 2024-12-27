@@ -33,7 +33,6 @@ export class Game implements GameContext, GameInit {
     }
 
     public getNearestEntity<T extends EntityInterface>(EntityClass: new (params: EntityParams) => T): T {
-        console.log('searching for', EntityClass)
         const entities = this.children.filter(e => e instanceof EntityClass);
         // TODO take nearest
         return entities[0] as T;

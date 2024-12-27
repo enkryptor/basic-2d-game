@@ -1,5 +1,5 @@
 import { MovingEntity } from "@engine/entities";
-import { multiplyVector } from "@engine/helpers";
+import { multiply } from "@engine/vectors";
 import Player from "./player";
 
 export default class Enemy extends MovingEntity {
@@ -16,6 +16,6 @@ export default class Enemy extends MovingEntity {
         const player = this.game.getNearestEntity(Player);
         const playerDirection = Math.atan2(player.y - this.y,  player.x - this.x);
         const newVector = { x: Math.cos(playerDirection), y: Math.sin(playerDirection) };
-        this.velocity = multiplyVector(newVector, this.maxSpeed);
+        this.velocity = multiply(newVector, this.maxSpeed);
     }
 }
