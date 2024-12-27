@@ -1,14 +1,15 @@
 import { Game } from "./game";
-import { EntityParams, EntityInterface, Vector2D, GameContext } from "./interfaces";
+import { EntityInterface, Vector2D, GameContext } from "./interfaces";
 
 export class Entity implements EntityInterface {
-    public x: number;
-    public y: number;
     public game: Game | null = null;
+    public x: number = NaN;
+    public y: number = NaN;
 
-    constructor(params: EntityParams) {
-        this.x = params.position?.x ?? 0;
-        this.y = params.position?.y ?? 0;
+    public init(game: Game): void;
+    public init(): void {
+        this.x = 0;
+        this.y = 0;
     }
 
     public draw(ctx: CanvasRenderingContext2D): void;
@@ -19,14 +20,9 @@ export class Entity implements EntityInterface {
 }
 
 export class MovingEntity extends Entity {
-    private elapsed: number;
+    protected elapsed: number = Number(document.timeline.currentTime) || 0;
 
     public velocity: Vector2D = { x: 0, y: 0 };
-
-    constructor(params: EntityParams) {
-        super(params);
-        this.elapsed = Number(document.timeline.currentTime) || 0;
-    }
 
     public update(elapsed: number, game: Game) {
         const delta = elapsed - this.elapsed;

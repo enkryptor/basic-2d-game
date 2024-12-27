@@ -22,15 +22,16 @@ export class Game implements GameContext, GameInit {
         this.fitToParent();
     }
 
-    public add(...entities: EntityInterface[]): void {
+    public add(entities: EntityInterface[]): void {
         entities.forEach((entity) => {
+            entity.init(this);
             this.children.push(entity);
         });
     }
 
-    public setScreen(initializer: (g: Game) => void) {
+    public setScreen(entities: EntityInterface[]) {
         this.children = [];
-        initializer(this);        
+        this.add(entities);
     }
 
     public run() {

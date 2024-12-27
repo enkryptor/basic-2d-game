@@ -5,6 +5,11 @@ import { multiply, normalize } from "@engine/vectors";
 export default class Player extends MovingEntity {
     public speed = 10;
 
+    public init(game: Game) {
+        this.x = game.screenWidth / 2;
+        this.y = game.screenHeight / 2;
+    }
+
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.font = "normal 48px sans-serif";
         ctx.fillText('😃', this.x, this.y);

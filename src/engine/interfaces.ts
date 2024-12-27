@@ -18,13 +18,13 @@ export interface GameContext {
 export interface EntityInterface {
     draw(ctx: CanvasRenderingContext2D): void;
     update(delta: number, game: GameContext): void;
+    init(game: GameContext): void;
 }
 
 export interface GameInit {
     screenWidth: number;
     screenHeight: number;
     fillStyle: string;
-    add(entity: EntityInterface): void;
 }
 
 export interface EntityParams {
