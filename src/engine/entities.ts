@@ -1,10 +1,10 @@
 import { Game } from "./game";
-import { Vector2D, GameContext } from "./interfaces";
+import { Size, Vector2D } from "./interfaces";
 
 export abstract class Entity {
     public game: Game | null = null;
     public position: Vector2D | null = null;
-    public size: Vector2D | null = null;
+    public size: Size | null = null;
 
     public init(game: Game): void;
     public init(): void { }
@@ -12,15 +12,16 @@ export abstract class Entity {
     public draw(ctx: CanvasRenderingContext2D): void;
     public draw(): void { }
 
-    public update(game: GameContext): void;
+    public update(game: Game): void;
     public update(): void { }
 
     public collidedWith(e: Entity) {
-        if (!this.size || !this.position || !e.position) {
+        if (!this.size || !this.position || !e.position || !e.size) {
             return false;
         }
-        return (e.position.x > this.position.x && e.position.x < (this.position.x + this.size.x)) &&
-            (e.position.y > this.position.y && e.position.y < (this.position.y + this.size.y))
+        // TODO use a dedicated hitbox property
+        return ((e.position.x + e.size.width) > this.position.x && e.position.x < (this.position.x + this.size.width)) &&
+            ((e.position.y + e.size.height) > this.position.y && e.position.y < (this.position.y + this.size.height))
     }
 }
 

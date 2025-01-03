@@ -4,14 +4,14 @@ import { multiply, normalize } from "@engine/vectors";
 import { finalScreen } from "./screens";
 
 export default class Player extends MovingEntity {
-    public speed = 10;
+    protected maxSpeed = 10;
+    public size = { width: 48, height: 48 };
 
     public init(game: Game) {
         this.position = {
             x: game.screenWidth / 2,
             y: game.screenHeight / 2,
         }
-        this.size = { x: 48, y: 48 };
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -19,6 +19,8 @@ export default class Player extends MovingEntity {
             return;
         }
         ctx.font = "normal 48px sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
         ctx.fillText('😃', this.position.x, this.position.y);
     }
 
@@ -31,6 +33,6 @@ export default class Player extends MovingEntity {
         }
 
         const direction = normalize(game.control.direction);
-        this.velocity = multiply(direction, this.speed);
+        this.velocity = multiply(direction, this.maxSpeed);
     }
 }

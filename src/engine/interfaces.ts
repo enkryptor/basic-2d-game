@@ -5,6 +5,11 @@ export interface Vector2D {
     y: number;
 }
 
+export interface Size {
+    width: number;
+    height: number;
+}
+
 export interface Controller {
     direction: Vector2D;
     fire: Boolean;

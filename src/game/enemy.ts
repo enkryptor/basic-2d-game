@@ -4,13 +4,16 @@ import { Game } from "@engine/game";
 import Player from "./player";
 
 export default class Enemy extends MovingEntity {
-    maxSpeed = 5;
+    protected maxSpeed = 5;
+    public size = { width: 48, height: 48 };
 
     public draw(ctx: CanvasRenderingContext2D): void {
         if (!this.position) {
             return;
         }
         ctx.font = "normal 48px sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
         ctx.fillText('👿', this.position.x, this.position.y);
     }
 
