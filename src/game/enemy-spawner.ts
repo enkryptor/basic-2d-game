@@ -16,7 +16,7 @@ function getRandomStartPosition(width: number, height: number): Vector2D {
 
 export default class EnemySpawner extends Entity {
     public update(game: GameContext): void {
-        if (game.elapsed % 5000 < 15) {
+        if (game.elapsed % 4000 < 15) {
             this.addEnemyTo(game);
         }
     }

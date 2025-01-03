@@ -4,7 +4,7 @@ import { Game } from "@engine/game";
 import Player from "./player";
 
 export default class Enemy extends MovingEntity {
-    protected maxSpeed = 5;
+    protected maxSpeed = 10;
     public size = { width: 48, height: 48 };
 
     public draw(ctx: CanvasRenderingContext2D): void {

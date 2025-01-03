@@ -4,7 +4,7 @@ import { multiply, normalize } from "@engine/vectors";
 import { finalScreen } from "./screens";
 
 export default class Player extends MovingEntity {
-    protected maxSpeed = 10;
+    protected maxSpeed = 15;
     public size = { width: 48, height: 48 };
 
     public init(game: Game) {
