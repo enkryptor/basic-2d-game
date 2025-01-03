@@ -42,10 +42,20 @@ export class Game implements GameContext {
         this.drawCycle(this.ctx);
     }
 
-    public getNearestEntity<T extends Entity>(EntityClass: new () => T): T {
+    public getNearestEntity<T extends Entity>(EntityClass: new () => T): T | null {
         const entities = this.children.filter(e => e instanceof EntityClass);
-        // TODO take nearest
-        return entities[0] as T;
+        if (!entities.length) {
+            return null;
+        } else if (entities.length === 1) {
+            return entities[0] as T;
+        } else {
+            // TODO find nearest
+            return null;
+        }
+    }
+
+    public getCollisions(target: Entity): Entity[] {
+        return this.children.filter((e) => e !== target && target.collidedWith(e));
     }
 
     private drawCycle(ctx: CanvasRenderingContext2D) {

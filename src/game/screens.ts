@@ -10,3 +10,7 @@ export const mainScreen = [
     new Player(),
     new EnemySpawner(),
 ];
+
+export const finalScreen = [
+    new Text("Game over"),
+];

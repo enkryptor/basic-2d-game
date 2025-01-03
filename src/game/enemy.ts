@@ -21,7 +21,7 @@ export default class Enemy extends MovingEntity {
         }
 
         const player = game.getNearestEntity(Player);
-        if (!player.position) {
+        if (!player?.position) {
             return;
         }
 

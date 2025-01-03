@@ -4,6 +4,7 @@ import { Vector2D, GameContext } from "./interfaces";
 export abstract class Entity {
     public game: Game | null = null;
     public position: Vector2D | null = null;
+    public size: Vector2D | null = null;
 
     public init(game: Game): void;
     public init(): void { }
@@ -13,6 +14,14 @@ export abstract class Entity {
 
     public update(game: GameContext): void;
     public update(): void { }
+
+    public collidedWith(e: Entity) {
+        if (!this.size || !this.position || !e.position) {
+            return false;
+        }
+        return (e.position.x > this.position.x && e.position.x < (this.position.x + this.size.x)) &&
+            (e.position.y > this.position.y && e.position.y < (this.position.y + this.size.y))
+    }
 }
 
 export abstract class MovingEntity extends Entity {

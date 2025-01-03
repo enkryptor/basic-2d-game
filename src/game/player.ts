@@ -1,6 +1,7 @@
 import { MovingEntity } from "@engine/entities";
 import { Game } from "@engine/game";
 import { multiply, normalize } from "@engine/vectors";
+import { finalScreen } from "./screens";
 
 export default class Player extends MovingEntity {
     public speed = 10;
@@ -10,6 +11,7 @@ export default class Player extends MovingEntity {
             x: game.screenWidth / 2,
             y: game.screenHeight / 2,
         }
+        this.size = { x: 48, y: 48 };
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -22,6 +24,12 @@ export default class Player extends MovingEntity {
 
     public update(game: Game): void {
         super.update(game);
+
+        const collisions = game.getCollisions(this);
+        if (collisions.length) {
+            game.setScreen(finalScreen)
+        }
+
         const direction = normalize(game.control.direction);
         this.velocity = multiply(direction, this.speed);
     }

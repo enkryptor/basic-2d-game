@@ -13,7 +13,8 @@ export interface Controller {
 export interface GameContext {
     elapsed: number;
     control: Controller;
-    getNearestEntity<T extends Entity>(EntityClass: new () => T): T;
+    getNearestEntity<T extends Entity>(EntityClass: new () => T): T | null;
+    getCollisions(target: Entity): Entity[];
     add<T extends Entity>(something: T | T[]): void;
     screenWidth: number;
     screenHeight: number;
