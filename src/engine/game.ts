@@ -1,6 +1,6 @@
 import { Entity } from "./entities";
 import { GameContext, Controller } from "./interfaces";
-import { Keyboard } from "./keyboard";
+import { keyboard } from "./keyboard";
 
 
 export class Game implements GameContext {
@@ -8,7 +8,7 @@ export class Game implements GameContext {
 
     public elapsed: number = 0;
 
-    public control: Controller = new Keyboard();
+    public control: Controller = keyboard;
 
     public fillStyle: string = "rgba(0, 0, 0, 1)";
 

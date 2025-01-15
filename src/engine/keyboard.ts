@@ -1,18 +1,21 @@
-import { Vector2D } from "./interfaces";
+import { Controller, Vector2D } from "./interfaces";
 
-export class Keyboard {
-    public rightPressed = 0;
-    public leftPressed = 0;
-    public upPressed = 0;
-    public downPressed = 0;
-    public spacePressed = 0;
+class Keyboard implements Controller {
+    protected keys = new Set<string>();
 
     public get direction(): Vector2D {
-        return { x: this.rightPressed - this.leftPressed, y: this.downPressed - this.upPressed };
+        const rightPressed = this.hasKeys("ArrowRight", "KeyD");
+        const leftPressed = this.hasKeys("ArrowLeft", "KeyA");
+        const downPressed = this.hasKeys("ArrowDown", "KeyS");
+        const upPressed = this.hasKeys("ArrowUp", "KeyW");
+
+        const x = rightPressed - leftPressed;
+        const y = downPressed - upPressed;
+        return { x, y };
     }
 
     public get fire(): boolean {
-        return Boolean(this.spacePressed);
+        return this.keys.has("Space")
     }
 
     constructor() {
@@ -20,35 +23,21 @@ export class Keyboard {
         document.addEventListener("keyup", e => this.keyUpHandler(e), false);
     }
 
+    protected hasKeys(...keys: string[]): 1 | 0 {
+        if (!keys.length) {
+            return 0;
+        }
+        return keys.some(key => this.keys.has(key)) ? 1 : 0;
+    }
+
     private keyDownHandler(event: KeyboardEvent) {
-        if (event.code === "ArrowRight") {
-            this.rightPressed = 1;
-        } else if (event.code === "ArrowLeft") {
-            this.leftPressed = 1;
-        }
-        if (event.code === "ArrowDown") {
-            this.downPressed = 1;
-        } else if (event.code === "ArrowUp") {
-            this.upPressed = 1;
-        }
-        if (event.code === "Space") {
-            this.spacePressed = 1;
-        }
+        this.keys.add(event.code);
+        console.log(this.keys)
     }
 
     private keyUpHandler(event: KeyboardEvent) {
-        if (event.code === "ArrowRight") {
-            this.rightPressed = 0;
-        } else if (event.code === "ArrowLeft") {
-            this.leftPressed = 0;
-        }
-        if (event.code === "ArrowDown") {
-            this.downPressed = 0;
-        } else if (event.code === "ArrowUp") {
-            this.upPressed = 0;
-        }
-        if (event.code === "Space") {
-            this.spacePressed = 0;
-        }
+        this.keys.delete(event.code);
     }
 }
+
+export const keyboard = new Keyboard();
